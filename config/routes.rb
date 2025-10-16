@@ -1,6 +1,13 @@
 Rails.application.routes.draw do
+  get "top/main"
+  post "top/login"
+  get "top/logout"
+  
   resources :users
-  root "users#index"
+  resources :tweets
+  resources :likes
+  root "tweets#index"
+  
   
   
   #get "users/index"
