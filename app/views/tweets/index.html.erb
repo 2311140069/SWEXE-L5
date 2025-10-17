@@ -1,17 +1,30 @@
+<h2>ツイート一覧</h2>
+
 <% @tweets.each do |e| %>
-    <%= e.message %>
-    <%= e.like_users.count %>
-    <%= link_to '削除', tweet_path(e), data: {turbo_method: :delete} %>
-    
+  <div style="margin-bottom: 15px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
+    <p><%= e.message %></p>
+
+    <p>❤️ <%= e.like_users.count %>件</p>
+
+    <%= link_to '削除', tweet_path(e), data: { turbo_method: :delete }, class: "btn" %>
+
     <% if session[:login_uid] %>
-        <%= link_to 'いいね', likes_path(tweet_id: e.id), data: { turbo_method: :post } %>
-        <%= link_to 'いいね削除', like_path(e), data: { turbo_method: :delete } %>
+      <%= link_to 'いいね', likes_path(tweet_id: e.id), data: { turbo_method: :post }, class: "btn" %>
+      <%= link_to 'いいね削除', like_path(e), data: { turbo_method: :delete }, class: "btn" %>
     <% end %>
-<br>
+  </div>
 <% end %>
 
-<%= link_to "新規追加", new_tweet_path %><br>
-<%= link_to "ログイン", top_main_path %><br>
-<%= link_to "ログアウト", top_logout_path %><br>
+<hr>
 
-ログイン中UID : <%= session[:login_uid] %>
+<%= link_to "新規追加", new_tweet_path %><br>
+
+<% if session[:login_uid] %>
+  <p>
+    ログイン中UID：<%= session[:login_uid] %><br>
+    <%= link_to "プロフィール管理", user_path(session[:login_uid]) %> |
+    <%= link_to "ログアウト", top_logout_path %>
+  </p>
+<% else %>
+  <%= link_to "ログイン", top_main_path %>
+<% end %>

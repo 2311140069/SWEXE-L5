@@ -1,0 +1,17 @@
+<h2>プロフィールを編集</h2>
+
+<%= form_with model: @user, local: true do |f| %>
+  <p>
+    <%= f.label :name, "名前" %><br>
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    <%= f.label :position, "役職" %><br>
+    <%= f.text_field :position %>
+  </p>
+
+  <%= f.submit "更新" %>
+<% end %>
+
+<%= link_to "戻る", user_path(@user) %>
