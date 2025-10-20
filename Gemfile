@@ -61,3 +61,15 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+
+
+
+group :production do
+  gem 'pg'
+end
+
+# Use SQLite locally (for development only)
+group :development, :test do
+  gem 'sqlite3'
+end
