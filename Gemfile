@@ -71,7 +71,6 @@ group :development, :test do
   gem "sqlite3", "~> 2.1"
 end
 
-# Use SQLite locally (for development only)
-group :development, :test do
-  gem 'sqlite3'
+group :production do
+  gem 'pg'
 end
