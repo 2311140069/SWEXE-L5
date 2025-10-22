@@ -1,27 +1,15 @@
 Rails.application.routes.draw do
-  get "top/main"
-  post "top/login"
-  get "top/logout"
-  
-  resources :users
+  # トップ画面＝ログインページ
+  root "top#main"
+
+  # ログイン処理
+  post "login", to: "top#login"
+  delete "logout", to: "top#logout"
+
+  # ユーザー登録関連
+  resources :users, only: [:new, :create, :show, :edit, :update]
+
+  # ツイートといいね機能
   resources :tweets
-  resources :likes
-  root "tweets#index"
-  
-  
-  
-  #get "users/index"
-  #get "users/new"
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
-
-  # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
-  # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-  # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
-
-  # Defines the root path route ("/")
-  # root "posts#index"
+  resources :likes, only: [:create, :destroy]
 end

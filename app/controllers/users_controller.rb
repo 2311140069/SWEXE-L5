@@ -1,51 +1,41 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :require_login, only: [:edit, :update, :destroy]
-  
-  def index
-    @users = User.all
-  end
-
   def new
     @user = User.new
   end
-  
+
   def create
-    User.create(uid: params[:user][:uid],pass: params[:user][:pass])
-    redirect_to root_path
-  end
-  
-  def edit
+    @user = User.new(uid: params[:user][:uid],
+                     password: params[:user][:password],
+                     password_confirmation: params[:user][:password_confirmation])
+    if @user.save
+      redirect_to root_path, notice: "ユーザー登録完了！ログインしてください。"
+    else
+      flash[:alert] = "登録に失敗しました。入力を確認してください。"
+      render :new
+    end
   end
   
   def show
+    @user = User.find(params[:id])
   end
-  
+
+  def edit
+    @user = User.find(params[:id])
+  end
+
   def update
+    @user = User.find(params[:id])
     if @user.update(user_params)
       redirect_to @user, notice: "プロフィールを更新しました。"
     else
       render :edit
     end
   end
-  
-  def destroy
-    User.find(params[:id]).destroy
-    redirect_to users_path
-  end
-  
+
   private
 
-  def set_user
-    @user = User.find(params[:id])
-  end
-  
   def user_params
-    params.require(:user).permit(:uid, :pass, :name, :position)
-  end
-
-  def require_login
-    redirect_to root_path, alert: "ログインが必要です" unless session[:login_uid] == @user.id
+    params.require(:user).permit(:name, :position, :password, :password_confirmation)
   end
   
 end

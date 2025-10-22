@@ -2,7 +2,7 @@
 
 <p><strong>役職：</strong> <%= @user.position.presence || "未設定" %></p>
 
-<% if session[:login_uid] == @user.id %>
+<% if current_user && current_user.id == @user.id %>
   <%= link_to "プロフィールを編集", edit_user_path(@user) %>
 <% end %>
 
