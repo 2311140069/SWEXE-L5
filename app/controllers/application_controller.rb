@@ -12,4 +12,8 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  def require_login
+    redirect_to root_path, alert: "ログインしてください" unless current_user
+  end
+  
 end

@@ -6,7 +6,7 @@ class TopController < ApplicationController
   def login
     user = User.find_by(uid: params[:uid])
     if user && user.authenticate(params[:pass])
-      session[:login_uid] = user.uid
+      session[:login_uid] = user.id
       redirect_to tweets_path, notice: "ログインしました"
     else
       flash[:alert] = "ログイン失敗"
