@@ -68,7 +68,7 @@ end
 
 
 group :development, :test do
-  gem "sqlite3", "~> 2.1"
+  gem "sqlite3", "~> 2.8"
 end
 
 group :production do
